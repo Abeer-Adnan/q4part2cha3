@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08/03/2020, 05:27:51 م
+    Author     : rant
+*/
+
+.root{
+    -fx-background-color: gray;
+}
+#lw{
+    -fx-font-weight:500;
+    -fx-font-size:23px;
+}
+.label{
+    -fx-font-size: 12px;
+    -fx-font-weight:500;
+
+}
+
+.button{
+    -fx-background-color: linear-gradient(#009999,#004b44);
+    -fx-font-size:12;
+    -fx-font-weight:500;
+    -fx-text-fill: white;
+}
