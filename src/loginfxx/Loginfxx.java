@@ -94,7 +94,7 @@ public class Loginfxx extends Application implements EventHandler<ActionEvent> {
                     String[] arr = textfile.split(" ");
 
                     if (tuser.getText().equals(arr[0]) && (tpass.getText().equals(arr[1]))) {
-                        LoginFxx2 l = new LoginFxx2();
+                        OptionsPag l = new OptionsPag();
                         sta.close();
                         try {
                             l.start(new Stage());

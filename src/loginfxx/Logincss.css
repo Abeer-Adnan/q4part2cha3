@@ -8,10 +8,14 @@ and open the template in the editor.
     Author     : rant
 */
 
-.root{
-    -fx-background-color: gray;
+.root {
+    -fx-background-image: url("background.jpg");
 }
 #lw{
+    -fx-font-weight:500;
+    -fx-font-size:23px;
+}
+#ls{
     -fx-font-weight:500;
     -fx-font-size:23px;
 }
@@ -22,7 +26,7 @@ and open the template in the editor.
 }
 
 .button{
-    -fx-background-color: linear-gradient(#009999,#004b44);
+    -fx-background-color: linear-gradient(#61A2B1, #2A5058);
     -fx-font-size:12;
     -fx-font-weight:500;
     -fx-text-fill: white;

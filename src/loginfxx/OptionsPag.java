@@ -20,15 +20,19 @@ import javafx.stage.Stage;
  *
  * @author rant
  */
-public class LoginFxx2 extends Application {
+public class OptionsPag extends Application implements EventHandler<ActionEvent> {
+
+    Button Badd, Bview;
+    Stage sstage;
 
     @Override
     public void start(Stage primaryStage) {
-        Button add = new Button("Add Student");
-        Button view = new Button("View Student");
+        Badd = new Button("Add Student");
+        Bview = new Button("View Student");
+        Badd.setOnAction(this);
         GridPane grp = new GridPane();
-        grp.add(add, 0, 0);
-        grp.add(view, 0, 1);
+        grp.add(Badd, 0, 0);
+        grp.add(Bview, 0, 1);
         grp.setVgap(10);
         grp.setAlignment(Pos.CENTER);
         Scene scene = new Scene(grp, 300, 250);
@@ -36,6 +40,7 @@ public class LoginFxx2 extends Application {
         primaryStage.setTitle("Options Page");
         primaryStage.setScene(scene);
         primaryStage.show();
+        sstage = primaryStage;
     }
 
     /**
@@ -43,6 +48,20 @@ public class LoginFxx2 extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+        if (event.getSource() == Badd) {
+            StudentEntryPage s2 = new StudentEntryPage();
+            sstage.close();
+            try {
+                s2.start(new Stage());
+            } catch (Exception e) {
+
+            }
+
+        }
     }
 
 }
