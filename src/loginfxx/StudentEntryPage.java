@@ -7,6 +7,8 @@ package loginfxx;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.InputMismatchException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -29,21 +32,20 @@ import javafx.stage.Stage;
  *
  * @author rant
  */
-public class StudentEntryPage extends Application  implements EventHandler<ActionEvent>{
+public class StudentEntryPage extends Application implements EventHandler<ActionEvent> {
 
     Label lstudentdata, lid, lname, lmajor, lgrade;
     TextField tid, tname, tmajor, tgrade;
     Button Badd, Breset, BExit;
     ListView list;
     Stage sta;
-    ArrayList<String> arr = new ArrayList<String>();
+    ArrayList<Student> arr = new ArrayList<Student>();
 
     @Override
     public void start(Stage primaryStage) {
         GridPane grd = new GridPane();
-        grd.setHgap(-85);
-        grd.setVgap(8);
-     
+        grd.setHgap(10);
+        grd.setVgap(10);
         grd.setAlignment(Pos.CENTER);
 
         lstudentdata = new Label("Student Data ");
@@ -53,21 +55,12 @@ public class StudentEntryPage extends Application  implements EventHandler<Actio
         lname = new Label("Name: ");
         lmajor = new Label("Major: ");
         lgrade = new Label("Grade:");
-        grd.add(lstudentdata, 0, 0);
-        grd.add(lid, 0, 1);
-        grd.add(lname, 0, 2);
-        grd.add(lmajor, 0, 3);
-        grd.add(lgrade, 0, 4);
 
+        VBox vl = new VBox(20, lid, lname, lmajor, lgrade);
         tid = new TextField();
         tname = new TextField();
         tmajor = new TextField();
         tgrade = new TextField();
-       
-        grd.add(tid, 1, 1);
-        grd.add(tname, 1, 2);
-        grd.add(tmajor, 1, 3);
-        grd.add(tgrade, 1, 4);
 
         Badd = new Button("Add");
         Badd.setOnAction(this);
@@ -75,18 +68,18 @@ public class StudentEntryPage extends Application  implements EventHandler<Actio
         Breset.setOnAction(this);
         BExit = new Button("Exit");
         BExit.setOnAction(this);
-    
-        // list=new ListView();
-        //grd.add(list, 2, 1);
-        //list.setPrefSize(200, 200);
-        //list.setPadding(new Insets(0,10,80,20));
-     //   list.setVisible(false);
-         HBox hb = new HBox(10, Badd, Breset, BExit);
-         
-         hb.setPadding(new Insets(10, 0, 0, 10));
-         GridPane.setHalignment(hb, HPos.CENTER);
-         grd.add(hb, 1, 5);
-        Scene scene = new Scene(grd, 300, 250);
+
+        HBox hb = new HBox(10, Badd, Breset, BExit);
+        hb.setAlignment(Pos.BASELINE_RIGHT);
+        VBox tl = new VBox(10, tid, tname, tmajor, tgrade, hb);
+        list = new ListView();
+        list.setVisible(false);
+        list.setPrefSize(340, 300);
+        HBox all = new HBox(10, vl, tl, list);
+        grd.add(lstudentdata, 0, 0);
+        grd.add(all, 0, 1);
+
+        Scene scene = new Scene(grd, 630, 490);
         scene.getStylesheets().add(getClass().getResource("Logincss.css").toExternalForm());
         primaryStage.setTitle("Student Entry Page");
         primaryStage.setScene(scene);
@@ -102,23 +95,39 @@ public class StudentEntryPage extends Application  implements EventHandler<Actio
 
     @Override
     public void handle(ActionEvent event) {
-        Student ss = new Student(0, STYLESHEET_MODENA, STYLESHEET_MODENA, 0);
-      if(event.getSource()== Badd){
-          arr.add(tid.getText());
-          arr.add(tname.getText());
-          arr.add(tmajor.getText());
-          arr.add(tgrade.getText());
-          Collections.sort(arr);
-          list.getItems().add(arr);
-        //  list.setVisible(true);
-}else if(event.getSource()== Breset){
-     tid.clear();
-          tname.clear();
-          tmajor.clear();
-          tgrade.clear();
-}else if(event.getSource()== BExit){
-    System.exit(0);
-}
+        if (event.getSource() == Badd) {
+            try{
+            Student ss = new Student(Integer.parseInt(tid.getText()), tname.getText(), tmajor.getText(), Double.parseDouble(tgrade.getText()));
+
+            arr.add(ss);
+            arr.sort(new Comparator<Student>() {
+                @Override
+                public int compare(Student t, Student t1) {
+                    return t.compareTo(t1);
+                }
+
+            });
+            list.getItems().clear();
+            for (Student t : arr) {
+                list.getItems().add(t.toString());
+
+            }
+            list.setVisible(true);
+        }catch(InputMismatchException  e){
+            e.getMessage();
+            
+        }} else if (event.getSource() == Breset) {
+
+            tid.setText("");
+            tname.setText("");
+            tmajor.setText("");
+            tgrade.setText("");
+
+            list.getItems().clear();
+            arr.clear();
+        } else if (event.getSource() == BExit) {
+            System.exit(0);
+        }
     }
 
 }

@@ -59,6 +59,6 @@ public class Student {
         return String.format("%-5d  %-10s %-13s %-2.2f %n", getId(),getName(),getMajor(),getGrade());
     }
      public int compareTo(Student s) {
-        return (int)( this.grade-s.grade);
+       return (int)-( this.grade-s.grade);
     }
 }
